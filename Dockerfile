@@ -12,12 +12,9 @@ RUN composer install \
     --optimize-autoloader
 
 # ==================================================================
-# STAGE 2: Runtime (PHP-FPM + Nginx) - Hugging Face compatible
+# STAGE 2: Runtime (PHP-FPM + Nginx)
 # ==================================================================
 FROM php:8.3-fpm-alpine
-
-# Create user with UID 1000 (required by Hugging Face Spaces)
-RUN adduser -u 1000 -D -s /bin/sh user
 
 # Install system dependencies
 RUN apk add --no-cache \
@@ -47,37 +44,24 @@ RUN apk add --no-cache \
     opcache \
     pcntl
 
-# Set working directory
-WORKDIR /home/user/app
+WORKDIR /var/www/html
 
-# Copy application source (dengan ownership user)
-COPY --chown=user:user . .
+# Copy application source
+COPY . .
 
 # Copy vendor dari stage 1
-COPY --from=vendor --chown=user:user /app/vendor ./vendor
+COPY --from=vendor /app/vendor ./vendor
 
 # Copy config nginx, supervisor, entrypoint
-COPY --chown=user:user docker/nginx.conf /etc/nginx/nginx.conf
-COPY --chown=user:user docker/supervisord.conf /etc/supervisord.conf
-COPY --chown=user:user docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY docker/supervisord.conf /etc/supervisord.conf
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Create required directories with proper permissions
-RUN mkdir -p /home/user/app/storage/framework/cache \
-             /home/user/app/storage/framework/sessions \
-             /home/user/app/storage/framework/views \
-             /home/user/app/storage/logs \
-             /home/user/app/bootstrap/cache \
-             /tmp/nginx \
- && chown -R user:user /home/user/app/storage /home/user/app/bootstrap/cache /tmp/nginx \
- && chmod -R 775 /home/user/app/storage /home/user/app/bootstrap/cache /tmp/nginx
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+ && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Switch to non-root user
-USER user
-ENV HOME=/home/user
-ENV PATH=/home/user/.local/bin:$PATH
-
-# Hugging Face Spaces default port
-EXPOSE 7860
+EXPOSE 8080
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

@@ -1,22 +1,14 @@
 #!/bin/bash
 set -e
 
-cd /home/user/app
+cd /var/www/html
 
 echo "=================================================="
-echo "  Portfolio Ariel - Hugging Face Spaces Startup"
+echo "  Portfolio Ariel - Container Startup"
 echo "=================================================="
-
-# Ensure required directories exist with proper permissions
-mkdir -p storage/framework/cache
-mkdir -p storage/framework/sessions
-mkdir -p storage/framework/views
-mkdir -p storage/logs
-mkdir -p bootstrap/cache
-mkdir -p /tmp/nginx
 
 echo "==> [1/6] Running database migrations..."
-php artisan migrate --force --no-interaction || true
+php artisan migrate --force --no-interaction
 
 echo "==> [2/6] Creating storage symlink..."
 php artisan storage:link || true
@@ -31,7 +23,8 @@ echo "==> [5/6] Caching views..."
 php artisan view:cache
 
 echo "==> [6/6] Fixing permissions..."
-chmod -R 775 storage bootstrap/cache /tmp/nginx
+chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 echo "==> Startup complete. Launching supervisord..."
 exec supervisord -c /etc/supervisord.conf
