@@ -17,5 +17,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/password/change', [PasswordController::class, 'update'])->name('password.update');
 
     // Placeholder, diganti controller di Phase 4
-    Route::get('/admin', fn () => 'Dashboard admin (placeholder)')->name('admin.dashboard');
+    Route::view('/admin', 'admin.dashboard')->name('admin.dashboard');
 });
