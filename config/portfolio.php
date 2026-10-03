@@ -10,4 +10,11 @@ return [
     'linkedin'         => env('PORTFOLIO_LINKEDIN', ''),
     'profile_photo'    => 'assets/images/profile.jpg',
     'cv_path'          => 'assets/cv/ariel-maulidibillah-cv.pdf',
+
+    // Kredensial admin, dibaca seeder lewat config() agar aman saat config:cache
+    'admin' => [
+        'name'     => env('ADMIN_NAME', 'Administrator'),
+        'email'    => env('ADMIN_EMAIL'),
+        'password' => env('ADMIN_PASSWORD'),
+    ],
 ];
