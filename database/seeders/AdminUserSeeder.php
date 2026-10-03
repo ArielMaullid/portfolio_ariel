@@ -18,12 +18,18 @@ class AdminUserSeeder extends Seeder
             return;
         }
 
-        // Cast 'hashed' di model User otomatis meng-hash password
-        User::updateOrCreate(
+        // firstOrCreate: hanya membuat admin kalau belum ada.
+        // Password yang sudah diganti lewat /password/change tidak ditimpa.
+        // Cast 'hashed' di model User otomatis meng-hash password.
+        $user = User::firstOrCreate(
             ['email' => $email],
             ['name' => $name, 'password' => $password]
         );
 
-        $this->command->info("Admin user siap: {$email}");
+        $this->command->info(
+            $user->wasRecentlyCreated
+                ? "Admin user dibuat: {$email}"
+                : "Admin user sudah ada, password tidak diubah: {$email}"
+        );
     }
 }
