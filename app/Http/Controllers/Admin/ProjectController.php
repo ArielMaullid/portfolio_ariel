@@ -61,7 +61,6 @@ class ProjectController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            // Hapus gambar lama kalau ada & bukan default
             $this->deleteImageIfExists($project->image);
 
             $data['image'] = $this->uploadImage(

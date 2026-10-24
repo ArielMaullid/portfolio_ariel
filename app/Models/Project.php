@@ -20,6 +20,10 @@ class Project extends Model
         'result',
         'image',
         'category',
+        'role',          // ← baru
+        'duration',      // ← baru
+        'challenges',    // ← baru
+        'reflection',    // ← baru
         'technologies',
         'github_url',
         'demo_url',
@@ -56,9 +60,9 @@ class Project extends Model
 
         while (
             static::query()
-                ->where('slug', $slug)
-                ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
-                ->exists()
+            ->where('slug', $slug)
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()
         ) {
             $slug = "{$base}-{$i}";
             $i++;
