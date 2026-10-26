@@ -1,2 +1,10 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Block admin area
+Disallow: /admin
+Disallow: /login
+Disallow: /password
+
+# Sitemap
+Sitemap: https://arielmaullid-portofolio-ariel.hf.space/sitemap.xml

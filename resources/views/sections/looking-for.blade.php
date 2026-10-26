@@ -5,7 +5,7 @@
             <div class="lf-header">
                 <div>
                     <span class="lf-eyebrow">Currently Looking For</span>
-                    <h2 class="lf-title">Open to Entry-Level Opportunities</h2>
+                    <h2 class="lf-title">Open to Entry-Level IT Opportunities</h2>
                 </div>
                 <div class="lf-status">
                     <span class="lf-dot"></span>
@@ -13,47 +13,52 @@
                 </div>
             </div>
 
-            <div class="lf-grid">
+            <div class="lf-grid" style="grid-template-columns: repeat(3, 1fr);">
+                {{-- PRIORITAS --}}
                 <div class="lf-block">
-                    <span class="lf-icon"><i class="bi bi-briefcase"></i></span>
-                    <span class="lf-label">Position</span>
+                    <div class="lf-head" style="color: var(--accent);">
+                        <i class="bi bi-star-fill lf-icon" style="color: var(--accent);"></i>
+                        <span class="lf-label" style="color: var(--accent);">Prioritas Utama</span>
+                    </div>
                     <ul class="lf-list">
                         <li>Web Developer</li>
                         <li>Laravel Developer</li>
                         <li>Junior Software Developer</li>
+                    </ul>
+                </div>
+
+                {{-- ALTERNATIF --}}
+                <div class="lf-block">
+                    <div class="lf-head">
+                        <i class="bi bi-briefcase lf-icon"></i>
+                        <span class="lf-label">Alternatif</span>
+                    </div>
+                    <ul class="lf-list">
                         <li>IT Staff</li>
+                        <li>IT Support</li>
+                        <li>QA Tester</li>
                     </ul>
                 </div>
 
+                {{-- TAMBAHAN --}}
                 <div class="lf-block">
-                    <span class="lf-icon"><i class="bi bi-clock-history"></i></span>
-                    <span class="lf-label">Type</span>
+                    <div class="lf-head">
+                        <i class="bi bi-plus-circle lf-icon"></i>
+                        <span class="lf-label">Pilihan Tambahan</span>
+                    </div>
                     <ul class="lf-list">
-                        <li>Full-time <span class="lf-tag">priority</span></li>
-                        <li>Contract</li>
-                        <li>Internship</li>
+                        <li>Junior DBA</li>
+                        <li>Junior SysAdmin</li>
+                        <li class="text-muted" style="font-size: 0.8rem; margin-top: 0.5rem; font-weight: 400; line-height: 1.4;">
+                            <em>*Bersedia mempelajari dasar keterampilan yang relevan.</em>
+                        </li>
                     </ul>
                 </div>
-
-                <div class="lf-block">
-                    <span class="lf-icon"><i class="bi bi-geo-alt"></i></span>
-                    <span class="lf-label">Location</span>
-                    <ul class="lf-list">
-                        <li>Remote</li>
-                        <li>On-site</li>
-                        <li>Hybrid</li>
-                    </ul>
-                </div>
-
-                <div class="lf-block">
-                    <span class="lf-icon"><i class="bi bi-map"></i></span>
-                    <span class="lf-label">Area</span>
-                    <ul class="lf-list">
-                        <li>Sukabumi</li>
-                        <li>Jakarta</li>
-                        <li>Area lainnya</li>
-                    </ul>
-                </div>
+            </div>
+            
+            <div class="mt-4 pt-3 border-top" style="border-color: var(--border) !important; display: flex; gap: 2rem; flex-wrap: wrap;">
+                <div><small class="text-muted"><strong>Jenis:</strong> Full-time (Utama), Contract, Internship</small></div>
+                <div><small class="text-muted"><strong>Lokasi:</strong> On-site, Hybrid, Remote (Sukabumi, Jabodetabek, Lainnya)</small></div>
             </div>
 
         </div>
@@ -62,146 +67,24 @@
 
 @push('head')
 <style>
-    .lf-section {
-        padding-top: 0;
-    }
-
-    .lf-card {
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        box-shadow: var(--shadow-sm);
-        padding: 2.5rem 2rem;
-    }
-
-    .lf-header {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: flex-end;
-        gap: 1rem;
-        margin-bottom: 2rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid var(--border);
-    }
-
-    .lf-eyebrow {
-        display: inline-block;
-        font-size: .72rem;
-        font-weight: 700;
-        letter-spacing: .1em;
-        text-transform: uppercase;
-        color: var(--accent);
-        margin-bottom: .5rem;
-    }
-
-    .lf-title {
-        font-size: clamp(1.35rem, 2.5vw, 1.65rem);
-        font-weight: 700;
-        color: var(--text-1);
-        margin: 0;
-        letter-spacing: -0.02em;
-    }
-
-    .lf-status {
-        display: inline-flex;
-        align-items: center;
-        gap: .5rem;
-        font-size: .85rem;
-        font-weight: 500;
-        color: var(--text-2);
-    }
-
-    .lf-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #10B981;
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, .5);
-        animation: qvPulse 2.5s infinite;
-    }
-
-    .lf-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
-    }
-
-    .lf-block {
-        min-width: 0;
-    }
-
-    .lf-icon {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
-        background: var(--accent-soft);
-        color: var(--accent);
-        font-size: 1rem;
-        margin-bottom: .85rem;
-    }
-
-    .lf-label {
-        display: block;
-        font-size: .72rem;
-        font-weight: 700;
-        letter-spacing: .08em;
-        text-transform: uppercase;
-        color: var(--text-2);
-        margin-bottom: .75rem;
-    }
-
-    .lf-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: grid;
-        gap: .5rem;
-    }
-
-    .lf-list li {
-        font-size: .95rem;
-        color: var(--text-1);
-        font-weight: 500;
-    }
-
-    .lf-tag {
-        display: inline-block;
-        font-size: .65rem;
-        font-weight: 700;
-        letter-spacing: .05em;
-        text-transform: uppercase;
-        color: var(--accent);
-        background: var(--accent-soft);
-        padding: .1rem .45rem;
-        border-radius: 4px;
-        margin-left: .35rem;
-        vertical-align: middle;
-    }
-
-    @media (max-width: 991px) {
-        .lf-card {
-            padding: 1.75rem 1.5rem;
-        }
-
-        .lf-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.75rem;
-        }
-    }
-
-    @media (max-width: 576px) {
-        .lf-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .lf-header {
-            align-items: flex-start;
-        }
+    .lf-section { padding-top: 1rem; padding-bottom: 2rem; }
+    .lf-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.5rem 2rem; }
+    .lf-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .lf-eyebrow { display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+    .lf-title { font-size: clamp(1.1rem, 2vw, 1.3rem); font-weight: 700; color: var(--text-1); margin: 0; letter-spacing: -0.01em; }
+    .lf-status { display: inline-flex; align-items: center; gap: .4rem; font-size: .8rem; font-weight: 500; color: var(--text-2); }
+    .lf-dot { width: 7px; height: 7px; border-radius: 50%; background: #10B981; box-shadow: 0 0 0 0 rgba(16, 185, 129, .5); animation: qvPulse 2.5s infinite; }
+    .lf-grid { display: grid; gap: 1.5rem; }
+    .lf-block { min-width: 0; }
+    .lf-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+    .lf-icon { color: var(--text-3); font-size: 0.9rem; }
+    .lf-label { font-size: .75rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-1); }
+    .lf-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+    .lf-list li { font-size: .9rem; color: var(--text-2); font-weight: 500; }
+    
+    @media (max-width: 768px) {
+        .lf-grid { grid-template-columns: 1fr !important; gap: 1.5rem; }
+        .lf-card { padding: 1.25rem; }
     }
 </style>
 @endpush

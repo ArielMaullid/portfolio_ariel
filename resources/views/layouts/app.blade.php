@@ -1553,6 +1553,72 @@
                 display: none !important;
             }
         }
+
+        /* ============================================================
+   PHASE 3 — GLOBAL POLISH & RESPONSIVE FIX
+   ============================================================ */
+        html,
+        body {
+            overflow-x: hidden;
+            /* Mencegah layar geser ke kanan di HP */
+            width: 100%;
+        }
+
+        /* Jarak antar section yang lebih konsisten */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-loose {
+            padding: 7rem 0 5rem 0;
+        }
+
+        .section-tight {
+            padding: 3rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 3.5rem 0;
+            }
+
+            .section-loose {
+                padding: 5rem 0 3rem 0;
+            }
+
+            .section-tight {
+                padding: 2rem 0;
+            }
+        }
+
+        /* Memastikan gambar dan konten tidak melebar melewati layar */
+        img,
+        svg,
+        video,
+        canvas,
+        audio,
+        iframe,
+        embed,
+        object {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Tipografi responsif */
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .hero-actions .btn {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
     </style>
 
     @stack('head')

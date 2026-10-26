@@ -5,65 +5,29 @@ $name = config('portfolio.name');
 
 <footer class="site-footer">
     <div class="container">
-
-        <div class="footer-grid">
-
-            {{-- Brand column --}}
-            <div class="footer-brand-col">
-                <a href="{{ route('home') }}" class="footer-brand">
-                    {{ $name }}<span class="brand-dot">.</span>
-                </a>
-                <p class="footer-desc">
-                    Fresh graduate S1 Teknik Informatika, membangun aplikasi web dengan Laravel, PHP, dan MySQL.
-                </p>
-            </div>
-
-            {{-- Navigation --}}
-            <div class="footer-col">
-                <h4 class="footer-col-title">Navigation</h4>
-                <ul class="footer-col-links">
-                    <li><a href="{{ route('home') }}#home">Home</a></li>
-                    <li><a href="{{ route('home') }}#about">About</a></li>
-                    <li><a href="{{ route('home') }}#skills">Skills</a></li>
-                    <li><a href="{{ route('projects.index') }}">Projects</a></li>
-                </ul>
-            </div>
-
-            {{-- Explore --}}
-            <div class="footer-col">
-                <h4 class="footer-col-title">Explore</h4>
-                <ul class="footer-col-links">
-                    <li><a href="{{ route('home') }}#education">Education</a></li>
-                    <li><a href="{{ route('home') }}#looking-for">Open To</a></li>
-                    <li><a href="{{ route('home') }}#contact">Contact</a></li>
-                </ul>
-            </div>
-
-            {{-- Connect --}}
-            <div class="footer-col">
-                <h4 class="footer-col-title">Connect</h4>
-                <ul class="footer-col-links">
-                    @if($globalSocialLinks->isNotEmpty())
-                    @foreach($globalSocialLinks as $link)
-                    <li>
-                        <a href="{{ $link->url }}" target="_blank" rel="noopener"
-                            aria-label="{{ $link->label }}">
-                            <i class="bi {{ $link->icon }}"></i>
-                            <span>{{ $link->label }}</span>
-                        </a>
-                    </li>
-                    @endforeach
-                    @else
-                    <li><span class="footer-empty">—</span></li>
-                    @endif
-                </ul>
-            </div>
-
+        <div class="footer-content text-center">
+            <span class="footer-copy">
+                &copy; {{ $year }} {{ $name }}. Hak cipta dilindungi.
+            </span>
         </div>
-
-        <div class="footer-bottom">
-            <span>&copy; {{ $year }} {{ $name }}. All rights reserved.</span>
-        </div>
-
     </div>
 </footer>
+
+@push('head')
+<style>
+    .site-footer {
+        border-top: 1px solid var(--border);
+        padding: 1.5rem 0;
+        /* Padding atas dan bawah 1.5rem */
+        /* margin-top: 4rem; <-- Pastikan baris ini TIDAK ADA */
+        background-color: var(--bg);
+    }
+
+    .footer-copy {
+        font-size: 0.85rem;
+        color: var(--text-3);
+        /* Warna abu-abu redup agar elegan */
+        letter-spacing: 0.01em;
+    }
+</style>
+@endpush

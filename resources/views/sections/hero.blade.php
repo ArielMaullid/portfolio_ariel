@@ -11,7 +11,7 @@ $cvExists = file_exists($cvFull);
 $cvUpdated = config('portfolio.cv_last_updated');
 @endphp
 
-<section id="home" class="section section-loose" style="padding-bottom: 60px;">
+<section id="home" class="section" style="padding-top: 5rem; padding-bottom: 3rem;">
     <div class="container">
         <div class="row align-items-center g-5">
 
@@ -19,24 +19,25 @@ $cvUpdated = config('portfolio.cv_last_updated');
             <div class="col-lg-7">
                 <span class="hero-badge">
                     <span class="pulse-dot"></span>
-                    Open to Opportunities
+                    Open to IT Opportunities
                 </span>
+
                 <h1 class="hero-title">
                     {{ $globalProfile->full_name }}
                 </h1>
 
-                <p class="hero-subtitle">{{ $globalProfile->headline }}</p>
+                <p class="hero-subtitle">Fresh Graduate S1 Teknik Informatika</p>
 
-                @if($globalProfile->short_bio)
-                <p class="hero-bio">{{ $globalProfile->short_bio }}</p>
-                @endif
+                <p class="hero-bio">
+                    Lulusan S1 Teknik Informatika Universitas Muhammadiyah Sukabumi dengan pengalaman mengerjakan proyek pengembangan aplikasi web, pengelolaan basis data, dan machine learning. Terbuka terhadap berbagai peluang karier di bidang IT serta siap belajar, berkembang, dan berkontribusi secara profesional.
+                </p>
 
                 <div class="hero-actions">
                     <a href="#projects" class="btn btn-primary btn-lg">
-                        <i class="bi bi-collection me-1"></i> View My Projects
+                        <i class="bi bi-collection me-1"></i> Lihat Proyek
                     </a>
                     <a href="#contact" class="btn btn-outline-secondary btn-lg">
-                        <i class="bi bi-chat-dots me-1"></i> Let's Talk
+                        <i class="bi bi-chat-dots me-1"></i> Hubungi Saya
                     </a>
                 </div>
 
@@ -44,37 +45,12 @@ $cvUpdated = config('portfolio.cv_last_updated');
                 @if($cvExists)
                 <div class="hero-cv">
                     <a href="{{ asset($cvPath) }}" download class="btn btn-link">
-                        <i class="bi bi-download me-1"></i> Download CV
+                        <i class="bi bi-download me-1"></i> Unduh CV
                     </a>
                     <span class="hero-cv-sep">·</span>
                     <a href="{{ asset($cvPath) }}" target="_blank" rel="noopener" class="btn btn-link">
-                        <i class="bi bi-eye me-1"></i> View CV
+                        <i class="bi bi-eye me-1"></i> Lihat CV
                     </a>
-                    @if($cvUpdated)
-                    <span class="hero-cv-date">Last updated {{ $cvUpdated }}</span>
-                    @endif
-                </div>
-                @else
-                <div class="hero-cv">
-                    <span class="hero-cv-pending">
-                        <i class="bi bi-file-earmark-text me-1"></i>
-                        CV will be available soon
-                    </span>
-                </div>
-                @endif
-
-                {{-- Social Links --}}
-                @if($globalSocialLinks->isNotEmpty())
-                <div class="hero-social">
-                    @foreach($globalSocialLinks as $link)
-                    <a href="{{ $link->url }}"
-                        class="social-icon"
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="{{ $link->label }}">
-                        <i class="bi {{ $link->icon }}"></i>
-                    </a>
-                    @endforeach
                 </div>
                 @endif
             </div>
@@ -91,3 +67,37 @@ $cvUpdated = config('portfolio.cv_last_updated');
         </div>
     </div>
 </section>
+
+{{-- ============================================================ --}}
+{{-- FASE 3: HERO MOBILE FIX (Rata tengah & perkecil foto di HP) --}}
+{{-- ============================================================ --}}
+@push('head')
+<style>
+    @media (max-width: 991px) {
+        .profile-photo-wrap {
+            max-width: 280px;
+            /* Memperkecil ukuran foto di HP/Tablet */
+            margin: 2rem auto 0 auto;
+            /* Foto ke tengah */
+        }
+
+        .hero-title,
+        .hero-subtitle,
+        .hero-bio {
+            text-align: center;
+            /* Teks ke tengah */
+        }
+
+        .hero-bio {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-actions,
+        .hero-cv {
+            justify-content: center;
+            /* Tombol ke tengah */
+        }
+    }
+</style>
+@endpush

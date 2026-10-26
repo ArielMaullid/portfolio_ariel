@@ -1,51 +1,58 @@
-<section id="contact" class="section section-loose cta-section">
+<section id="contact" class="section" style="padding-bottom: 2rem;">
     <div class="container">
 
-        <div class="cta-head reveal">
+        <div class="contact-header reveal">
             <span class="section-eyebrow">Contact</span>
-            <h2 class="cta-title">Have a project, opportunity, or idea?</h2>
-            <p class="cta-subtitle">
-                Let's talk. I'm open to entry-level roles, freelance projects, or collaboration opportunities.
+            <h2 class="section-title mb-3">Let's Work Together</h2>
+            <p class="section-subtitle mb-5">
+                Terbuka untuk peluang kerja, magang, maupun proyek profesional. Silakan hubungi saya melalui kanal berikut.
             </p>
         </div>
 
         @if($globalSocialLinks->isNotEmpty())
-        <div class="cta-cards reveal">
-            @foreach($globalSocialLinks as $link)
-            @php
-            $isExternal = str_starts_with($link->url, 'http');
-            $subtitle = match($link->platform) {
-            'whatsapp' => 'Chat langsung',
-            'email' => preg_match('/^mailto:(.+)$/', $link->url, $m) ? $m[1] : 'Kirim email',
-            'github' => 'Lihat repository',
-            'linkedin' => 'Terhubung profesional',
-            'instagram' => 'Follow Instagram',
-            default => 'Hubungi via ' . $link->label,
-            };
-            @endphp
+            <div class="row g-4 reveal">
+                @foreach($globalSocialLinks as $link)
+                    @php
+                        $isExternal = str_starts_with($link->url, 'http');
+                        $subtitle = match($link->platform) {
+                            'whatsapp'  => 'Chat langsung',
+                            'email'     => preg_match('/^mailto:(.+)$/', $link->url, $m) ? $m[1] : 'Kirim email',
+                            'github'    => 'Lihat repositori',
+                            'linkedin'  => 'Terhubung profesional',
+                            'instagram' => 'Ikuti Instagram',
+                            default     => 'Hubungi via ' . $link->label,
+                        };
+                        $accentColor = match($link->platform) {
+                            'whatsapp'  => '#25D366',
+                            'github'    => '#333333',
+                            'linkedin'  => '#0A66C2',
+                            'instagram' => '#E1306C',
+                            default     => 'var(--accent)',
+                        };
+                    @endphp
 
-            <a href="{{ $link->url }}"
-                @if($isExternal) target="_blank" rel="noopener" @endif
-                class="contact-card-link">
-                <div class="contact-card">
-                    <span class="contact-card-icon">
-                        <i class="bi {{ $link->icon }}"></i>
-                    </span>
-                    <div class="contact-card-body">
-                        <span class="contact-card-label">{{ $link->label }}</span>
-                        <span class="contact-card-sub">{{ $subtitle }}</span>
+                    <div class="col-md-6 col-lg-4">
+                        <a href="{{ $link->url }}"
+                           @if($isExternal) target="_blank" rel="noopener" @endif
+                           class="contact-card-anim"
+                           style="--card-accent: {{ $accentColor }};">
+
+                            <span class="contact-icon-anim">
+                                <i class="bi {{ $link->icon }}"></i>
+                            </span>
+
+                            <span class="contact-text-anim">
+                                <span class="contact-label-anim">{{ $link->label }}</span>
+                                <span class="contact-sub-anim">{{ $subtitle }}</span>
+                            </span>
+                        </a>
                     </div>
-                    <span class="contact-card-arrow">
-                        <i class="bi bi-arrow-up-right"></i>
-                    </span>
-                </div>
-            </a>
-            @endforeach
-        </div>
+                @endforeach
+            </div>
         @else
-        <div class="cta-empty reveal">
-            <p class="text-muted-2 mb-0">Contact channels will be available soon.</p>
-        </div>
+            <div class="card-surface p-5 text-center reveal">
+                <p class="text-muted-2 mb-0">Kanal kontak akan segera tersedia.</p>
+            </div>
         @endif
 
     </div>
@@ -53,144 +60,170 @@
 
 @push('head')
 <style>
-    .cta-head {
-        text-align: center;
-        max-width: 640px;
-        margin: 0 auto 3rem;
-    }
-
-    .cta-title {
-        font-size: clamp(1.65rem, 3.5vw, 2.4rem);
-        font-weight: 700;
-        color: var(--text-1);
-        letter-spacing: -0.025em;
-        line-height: 1.15;
-        margin-bottom: .85rem;
-    }
-
-    .cta-subtitle {
-        font-size: 1.05rem;
-        color: var(--text-2);
-        line-height: 1.65;
-        margin: 0;
-    }
-
-    .cta-cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 1rem;
-        max-width: 900px;
-        margin: 0 auto;
-    }
-
-    .contact-card-link {
-        text-decoration: none;
-        display: block;
-    }
-
-    .contact-card {
+    /* ============================================================
+       CONTACT CARD — Animated
+       ============================================================ */
+    .contact-card-anim {
         display: flex;
         align-items: center;
         gap: 1rem;
-        padding: 1.25rem 1.35rem;
+        padding: 1.35rem 1.5rem;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-sm);
-        transition: transform .25s var(--ease),
-            box-shadow .25s var(--ease),
-            border-color .25s var(--ease);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
         height: 100%;
+        transition:
+            transform .35s cubic-bezier(0.34, 1.56, 0.64, 1),
+            box-shadow .35s var(--ease),
+            border-color .35s var(--ease),
+            background-color .35s var(--ease);
     }
 
-    .contact-card-link:hover .contact-card {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-lg);
-        border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+    /* Background gradient glow muncul saat hover */
+    .contact-card-anim::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--card-accent) 12%, transparent) 0%,
+            transparent 60%
+        );
+        opacity: 0;
+        transition: opacity .4s var(--ease);
+        pointer-events: none;
     }
 
-    .contact-card-icon {
+    /* Accent line tipis di kiri */
+    .contact-card-anim::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3px;
+        height: 0;
+        background: var(--card-accent);
+        border-radius: 0 3px 3px 0;
+        transition: height .4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Hover state */
+    .contact-card-anim:hover {
+        transform: translateY(-5px);
+        border-color: color-mix(in srgb, var(--card-accent) 40%, var(--border));
+        box-shadow:
+            0 10px 30px -8px color-mix(in srgb, var(--card-accent) 30%, transparent),
+            0 4px 12px rgba(0, 0, 0, 0.08);
+        background: color-mix(in srgb, var(--surface) 96%, var(--card-accent));
+    }
+
+    .contact-card-anim:hover::before {
+        opacity: 1;
+    }
+
+    .contact-card-anim:hover::after {
+        height: 60%;
+    }
+
+    /* Icon wrapper */
+    .contact-icon-anim {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         width: 48px;
         height: 48px;
         border-radius: 12px;
-        background: var(--accent-soft);
-        color: var(--accent);
+        background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+        color: var(--card-accent);
         font-size: 1.35rem;
         flex-shrink: 0;
-        transition: transform .25s var(--ease);
+        position: relative;
+        z-index: 1;
+        transition:
+            transform .4s cubic-bezier(0.34, 1.56, 0.64, 1),
+            background-color .3s var(--ease),
+            color .3s var(--ease);
     }
 
-    .contact-card-link:hover .contact-card-icon {
-        transform: scale(1.05);
+    .contact-card-anim:hover .contact-icon-anim {
+        transform: scale(1.1) rotate(-6deg);
+        background: var(--card-accent);
+        color: #ffffff;
     }
 
-    .contact-card-body {
+    /* Text */
+    .contact-text-anim {
         display: flex;
         flex-direction: column;
-        gap: .15rem;
+        gap: .25rem;
         min-width: 0;
-        flex: 1;
+        position: relative;
+        z-index: 1;
     }
 
-    .contact-card-label {
+    .contact-label-anim {
         font-size: 1rem;
         font-weight: 700;
         color: var(--text-1);
         letter-spacing: -0.01em;
+        line-height: 1.2;
+        transition: color .3s var(--ease);
     }
 
-    .contact-card-sub {
+    .contact-card-anim:hover .contact-label-anim {
+        color: var(--card-accent);
+    }
+
+    .contact-sub-anim {
         font-size: .85rem;
         color: var(--text-2);
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        line-height: 1.2;
     }
 
-    .contact-card-arrow {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        color: var(--text-3);
-        font-size: .9rem;
-        flex-shrink: 0;
-        transition: color .25s var(--ease), transform .25s var(--ease);
+    /* Dark mode tweak */
+    [data-bs-theme="dark"] .contact-card-anim:hover {
+        box-shadow:
+            0 12px 32px -8px color-mix(in srgb, var(--card-accent) 40%, transparent),
+            0 4px 12px rgba(0, 0, 0, 0.3);
     }
 
-    .contact-card-link:hover .contact-card-arrow {
-        color: var(--accent);
-        transform: translate(2px, -2px);
+    [data-bs-theme="dark"] .contact-card-anim[style*="--card-accent: #333333"] .contact-icon-anim {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
     }
 
-    .cta-empty {
-        text-align: center;
-        padding: 3rem 1rem;
-        border: 1px dashed var(--border);
-        border-radius: var(--radius-lg);
-        max-width: 500px;
-        margin: 0 auto;
+    [data-bs-theme="dark"] .contact-card-anim[style*="--card-accent: #333333"]:hover .contact-icon-anim {
+        background: #ffffff;
+        color: #0B1220;
     }
 
-    @media (max-width: 576px) {
-        .cta-cards {
-            grid-template-columns: 1fr;
-            gap: .75rem;
+    /* Responsive */
+    @media (max-width: 768px) {
+        .contact-card-anim {
+            padding: 1.15rem 1.25rem;
         }
-
-        .contact-card {
-            padding: 1.1rem 1.2rem;
-        }
-
-        .contact-card-icon {
-            width: 42px;
-            height: 42px;
+        .contact-icon-anim {
+            width: 44px;
+            height: 44px;
             font-size: 1.2rem;
+        }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        .contact-card-anim,
+        .contact-card-anim::before,
+        .contact-card-anim::after,
+        .contact-icon-anim,
+        .contact-label-anim {
+            transition-duration: 0.01ms !important;
         }
     }
 </style>
